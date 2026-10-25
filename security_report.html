@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Security Analysis Report | InternNova Project 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0e1a;--surface:#111827;--surface2:#1a2235;--border:#1e2d45;--text:#e2e8f0;--muted:#64748b;--accent:#38bdf8;--red:#f87171;--yellow:#fbbf24;--green:#4ade80}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+header{background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 50%,#0f172a 100%);border-bottom:1px solid var(--border);padding:48px 40px 40px;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(56,189,248,.12) 0%,transparent 70%);pointer-events:none}
+.header-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;max-width:1200px;margin:0 auto}
+.logo-area{display:flex;align-items:center;gap:14px}
+.shield-icon{width:52px;height:52px;background:linear-gradient(135deg,var(--accent),#0ea5e9);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 0 24px rgba(56,189,248,.35)}
+h1{font-size:1.7rem;font-weight:800;letter-spacing:-.5px}h1 span{color:var(--accent)}
+.subtitle{color:var(--muted);font-size:.85rem;margin-top:2px}
+.meta-pill{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pill{background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.25);color:var(--accent);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:500}
+.pill.warning{background:rgba(248,113,113,.1);border-color:rgba(248,113,113,.3);color:var(--red)}
+.generated{color:var(--muted);font-size:.78rem;margin-top:6px}
+main{max-width:1200px;margin:0 auto;padding:36px 40px 60px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:40px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 20px;text-align:center;transition:transform .2s,box-shadow .2s}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.3)}
+.stat-card.red{border-color:rgba(248,113,113,.4)}.stat-card.yellow{border-color:rgba(251,191,36,.4)}.stat-card.green{border-color:rgba(74,222,128,.4)}.stat-card.blue{border-color:rgba(56,189,248,.4)}
+.stat-num{font-size:2.6rem;font-weight:800;line-height:1}
+.stat-num.red{color:var(--red)}.stat-num.yellow{color:var(--yellow)}.stat-num.green{color:var(--green)}.stat-num.blue{color:var(--accent)}
+.stat-label{color:var(--muted);font-size:.78rem;margin-top:6px;text-transform:uppercase;letter-spacing:.05em;font-weight:500}
+.section-title{font-size:1.05rem;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.severity-summary{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:36px}
+.sev-bar-row{display:flex;align-items:center;gap:14px;margin-bottom:14px}.sev-bar-row:last-child{margin-bottom:0}
+.sev-bar-label{width:70px;font-size:.82rem;font-weight:600}
+.sev-bar-track{flex:1;height:10px;background:var(--surface2);border-radius:10px;overflow:hidden}
+.sev-bar-fill{height:100%;border-radius:10px;transition:width 1s ease}
+.sev-bar-count{width:30px;text-align:right;font-size:.82rem;font-weight:700}
+.filter-bar{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.filter-btn{padding:6px 18px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);cursor:pointer;font-size:.82rem;font-family:'Inter',sans-serif;font-weight:500;transition:all .2s}
+.filter-btn:hover{color:var(--text);border-color:var(--accent)}
+.filter-btn.active{background:rgba(56,189,248,.15);border-color:var(--accent);color:var(--accent)}
+.filter-btn.red-btn.active{background:rgba(248,113,113,.15);border-color:var(--red);color:var(--red)}
+.filter-btn.yellow-btn.active{background:rgba(251,191,36,.15);border-color:var(--yellow);color:var(--yellow)}
+.filter-btn.green-btn.active{background:rgba(74,222,128,.15);border-color:var(--green);color:var(--green)}
+.table-wrap{overflow-x:auto;border-radius:16px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;background:var(--surface)}
+thead tr{background:var(--surface2);border-bottom:2px solid var(--border)}
+th{padding:14px 16px;text-align:left;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;white-space:nowrap}
+td{padding:14px 16px;font-size:.875rem;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr.alert-row{transition:background .15s}tr.alert-row:hover{background:rgba(255,255,255,.03)}
+tr.sev-high-row:hover{background:rgba(248,113,113,.06)}tr.sev-med-row:hover{background:rgba(251,191,36,.06)}
+.num{color:var(--muted);font-size:.8rem;text-align:center;width:40px}.center{text-align:center}
+.when{display:block;color:var(--muted);font-size:.72rem;margin-top:2px}
+code.ip{font-family:'JetBrains Mono',monospace;background:rgba(56,189,248,.1);color:var(--accent);padding:2px 8px;border-radius:6px;font-size:.82rem;white-space:nowrap}
+.badge{display:inline-block;padding:3px 12px;border-radius:12px;font-size:.75rem;font-weight:700;letter-spacing:.05em}
+.sev-high{background:rgba(248,113,113,.15);color:var(--red);border:1px solid rgba(248,113,113,.4)}
+.sev-med{background:rgba(251,191,36,.15);color:var(--yellow);border:1px solid rgba(251,191,36,.4)}
+.sev-low{background:rgba(74,222,128,.15);color:var(--green);border:1px solid rgba(74,222,128,.4)}
+ul.recs{list-style:none;padding:0}
+ul.recs li{font-size:.8rem;color:var(--muted);padding:2px 0 2px 14px;position:relative}
+ul.recs li::before{content:'\2192';position:absolute;left:0;color:var(--accent)}
+.hidden{display:none}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+footer{text-align:center;padding:24px;color:var(--muted);font-size:.78rem;border-top:1px solid var(--border);margin-top:40px}
+footer strong{color:var(--accent)}
+</style>
+</head>
+<body>
+<header><div class="header-top">
+  <div class="logo-area"><div class="shield-icon">&#128272;</div>
+    <div><h1>Security <span>Log Analyzer</span></h1>
+    <div class="subtitle">Suspicious Activity Detection Report &nbsp;|&nbsp; InternNova Project 3</div></div></div>
+  <div><div class="meta-pill"><span class="pill">&#128013; Python 3</span><span class="pill">Training Environment</span><span class="pill warning">&#9888; 5 HIGH Alerts</span></div>
+  <div class="generated">Generated: October 25, 2026 at 09:43:38</div></div>
+</div></header>
+<main>
+  <div class="stats-grid"><div class="stat-card blue"><div class="stat-num blue">76</div><div class="stat-label">Total Events</div></div><div class="stat-card red"><div class="stat-num red">30</div><div class="stat-label">Failed Logins</div></div><div class="stat-card yellow"><div class="stat-num yellow">29</div><div class="stat-label">Port Scans</div></div><div class="stat-card yellow"><div class="stat-num yellow">7</div><div class="stat-label">Suspicious Access</div></div><div class="stat-card green"><div class="stat-num green">10</div><div class="stat-label">Successful Logins</div></div><div class="stat-card red"><div class="stat-num red">7</div><div class="stat-label">Total Alerts</div></div></div>
+  <div class="section-title">Severity Breakdown</div>
+  <div class="severity-summary"><div class="sev-bar-row"><div class="sev-bar-label" style="color:var(--red)">HIGH</div><div class="sev-bar-track"><div class="sev-bar-fill" style="width:71%;background:var(--red)"></div></div><div class="sev-bar-count" style="color:var(--red)">5</div></div><div class="sev-bar-row"><div class="sev-bar-label" style="color:var(--yellow)">MEDIUM</div><div class="sev-bar-track"><div class="sev-bar-fill" style="width:29%;background:var(--yellow)"></div></div><div class="sev-bar-count" style="color:var(--yellow)">2</div></div><div class="sev-bar-row"><div class="sev-bar-label" style="color:var(--green)">LOW</div><div class="sev-bar-track"><div class="sev-bar-fill" style="width:0%;background:var(--green)"></div></div><div class="sev-bar-count" style="color:var(--green)">0</div></div></div>
+  <div class="section-title">Detected Alerts</div>
+  <div class="filter-bar">
+    <button class="filter-btn active"     onclick="filterAlerts('ALL',    this)">All (7)</button>
+    <button class="filter-btn red-btn"    onclick="filterAlerts('HIGH',   this)">&#128308; HIGH (5)</button>
+    <button class="filter-btn yellow-btn" onclick="filterAlerts('MEDIUM', this)">&#128993; MEDIUM (2)</button>
+    <button class="filter-btn green-btn"  onclick="filterAlerts('LOW',    this)">&#128994; LOW (0)</button>
+  </div>
+  <div class="table-wrap"><table id="alertsTable">
+    <thead><tr><th>#</th><th>IP Address</th><th>Activity</th><th class="center">Count</th>
+    <th class="center">Severity</th><th>Threat</th><th>Recommended Actions</th></tr></thead>
+    <tbody><tr class="alert-row sev-high-row" data-sev="HIGH"><td class="num">1</td><td><code class="ip">192.168.1.10</code></td><td>Repeated Failed Logins<span class="when">2026-10-25 10:45:09 &rarr; 2026-10-25 10:55:19</span></td><td class="center"><strong>11</strong></td><td class="center"><span class="badge sev-high">HIGH</span></td><td>Possible Brute-Force Attack</td><td><ul class="recs"><li>Block IP with firewall</li><li>Enable account lockout policy</li><li>Enforce MFA (Multi-Factor Authentication)</li></ul></td></tr><tr class="alert-row sev-high-row" data-sev="HIGH"><td class="num">2</td><td><code class="ip">172.16.0.50</code></td><td>Repeated Failed Logins<span class="when">2026-10-25 12:52:40 &rarr; 2026-10-25 13:01:07</span></td><td class="center"><strong>10</strong></td><td class="center"><span class="badge sev-high">HIGH</span></td><td>Possible Brute-Force Attack</td><td><ul class="recs"><li>Block IP with firewall</li><li>Enable account lockout policy</li><li>Enforce MFA (Multi-Factor Authentication)</li></ul></td></tr><tr class="alert-row sev-high-row" data-sev="HIGH"><td class="num">3</td><td><code class="ip">10.0.0.99</code></td><td>Port Scanning Activity<span class="when">2026-10-25 08:53:00 &rarr; 2026-10-25 08:53:22</span></td><td class="center"><strong>12</strong></td><td class="center"><span class="badge sev-high">HIGH</span></td><td>Possible Network Reconnaissance / Port Scan</td><td><ul class="recs"><li>Block IP immediately</li><li>Enable IDS/IPS rules</li><li>Review firewall ingress rules</li></ul></td></tr><tr class="alert-row sev-high-row" data-sev="HIGH"><td class="num">4</td><td><code class="ip">192.168.1.20</code></td><td>Port Scanning Activity<span class="when">2026-10-25 10:24:00 &rarr; 2026-10-25 10:24:20</span></td><td class="center"><strong>11</strong></td><td class="center"><span class="badge sev-high">HIGH</span></td><td>Possible Network Reconnaissance / Port Scan</td><td><ul class="recs"><li>Block IP immediately</li><li>Enable IDS/IPS rules</li><li>Review firewall ingress rules</li></ul></td></tr><tr class="alert-row sev-high-row" data-sev="HIGH"><td class="num">5</td><td><code class="ip">192.168.1.30</code></td><td>Suspicious Unauthorized Access<span class="when">2026-10-25 11:41:09 &rarr; 2026-10-25 14:17:10</span></td><td class="center"><strong>7</strong></td><td class="center"><span class="badge sev-high">HIGH</span></td><td>Possible Unauthorized Access Attempt</td><td><ul class="recs"><li>Investigate immediately</li><li>Check access-control lists</li><li>Review authentication logs</li><li>Isolate affected systems</li></ul></td></tr><tr class="alert-row sev-med-row" data-sev="MEDIUM"><td class="num">6</td><td><code class="ip">10.0.0.22</code></td><td>Repeated Failed Logins<span class="when">2026-10-25 10:55:09 &rarr; 2026-10-25 11:00:30</span></td><td class="center"><strong>6</strong></td><td class="center"><span class="badge sev-med">MEDIUM</span></td><td>Possible Brute-Force Attack</td><td><ul class="recs"><li>Block IP with firewall</li><li>Enable account lockout policy</li><li>Enforce MFA (Multi-Factor Authentication)</li></ul></td></tr><tr class="alert-row sev-med-row" data-sev="MEDIUM"><td class="num">7</td><td><code class="ip">192.168.1.45</code></td><td>Port Scanning Activity<span class="when">2026-10-25 11:12:00 &rarr; 2026-10-25 11:12:10</span></td><td class="center"><strong>6</strong></td><td class="center"><span class="badge sev-med">MEDIUM</span></td><td>Possible Network Reconnaissance / Port Scan</td><td><ul class="recs"><li>Block IP immediately</li><li>Enable IDS/IPS rules</li><li>Review firewall ingress rules</li></ul></td></tr></tbody>
+  </table></div>
+</main>
+<footer><strong>Security Log Analyzer</strong> &nbsp;|&nbsp; InternNova Cybersecurity Internship &mdash; Project 3 &nbsp;|&nbsp;
+Authorized Training Environment Only &nbsp;|&nbsp; Built with Python Standard Library</footer>
+<script>
+function filterAlerts(sev, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.alert-row').forEach(row => {
+    row.classList.toggle('hidden', !(sev === 'ALL' || row.dataset.sev === sev));
+  });
+}
+</script>
+</body>
+</html>

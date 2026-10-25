@@ -1,0 +1,108 @@
+[
+  {
+    "ip": "192.168.1.10",
+    "etype": "FAILED_LOGIN",
+    "activity": "Repeated Failed Logins",
+    "count": 11,
+    "severity": "HIGH",
+    "threat": "Possible Brute-Force Attack",
+    "actions": [
+      "Block IP with firewall",
+      "Enable account lockout policy",
+      "Enforce MFA (Multi-Factor Authentication)"
+    ],
+    "first_seen": "2026-10-25 10:45:09",
+    "last_seen": "2026-10-25 10:55:19"
+  },
+  {
+    "ip": "172.16.0.50",
+    "etype": "FAILED_LOGIN",
+    "activity": "Repeated Failed Logins",
+    "count": 10,
+    "severity": "HIGH",
+    "threat": "Possible Brute-Force Attack",
+    "actions": [
+      "Block IP with firewall",
+      "Enable account lockout policy",
+      "Enforce MFA (Multi-Factor Authentication)"
+    ],
+    "first_seen": "2026-10-25 12:52:40",
+    "last_seen": "2026-10-25 13:01:07"
+  },
+  {
+    "ip": "10.0.0.99",
+    "etype": "PORT_SCAN",
+    "activity": "Port Scanning Activity",
+    "count": 12,
+    "severity": "HIGH",
+    "threat": "Possible Network Reconnaissance / Port Scan",
+    "actions": [
+      "Block IP immediately",
+      "Enable IDS/IPS rules",
+      "Review firewall ingress rules"
+    ],
+    "first_seen": "2026-10-25 08:53:00",
+    "last_seen": "2026-10-25 08:53:22"
+  },
+  {
+    "ip": "192.168.1.20",
+    "etype": "PORT_SCAN",
+    "activity": "Port Scanning Activity",
+    "count": 11,
+    "severity": "HIGH",
+    "threat": "Possible Network Reconnaissance / Port Scan",
+    "actions": [
+      "Block IP immediately",
+      "Enable IDS/IPS rules",
+      "Review firewall ingress rules"
+    ],
+    "first_seen": "2026-10-25 10:24:00",
+    "last_seen": "2026-10-25 10:24:20"
+  },
+  {
+    "ip": "192.168.1.30",
+    "etype": "SUSPICIOUS_ACCESS",
+    "activity": "Suspicious Unauthorized Access",
+    "count": 7,
+    "severity": "HIGH",
+    "threat": "Possible Unauthorized Access Attempt",
+    "actions": [
+      "Investigate immediately",
+      "Check access-control lists",
+      "Review authentication logs",
+      "Isolate affected systems"
+    ],
+    "first_seen": "2026-10-25 11:41:09",
+    "last_seen": "2026-10-25 14:17:10"
+  },
+  {
+    "ip": "10.0.0.22",
+    "etype": "FAILED_LOGIN",
+    "activity": "Repeated Failed Logins",
+    "count": 6,
+    "severity": "MEDIUM",
+    "threat": "Possible Brute-Force Attack",
+    "actions": [
+      "Block IP with firewall",
+      "Enable account lockout policy",
+      "Enforce MFA (Multi-Factor Authentication)"
+    ],
+    "first_seen": "2026-10-25 10:55:09",
+    "last_seen": "2026-10-25 11:00:30"
+  },
+  {
+    "ip": "192.168.1.45",
+    "etype": "PORT_SCAN",
+    "activity": "Port Scanning Activity",
+    "count": 6,
+    "severity": "MEDIUM",
+    "threat": "Possible Network Reconnaissance / Port Scan",
+    "actions": [
+      "Block IP immediately",
+      "Enable IDS/IPS rules",
+      "Review firewall ingress rules"
+    ],
+    "first_seen": "2026-10-25 11:12:00",
+    "last_seen": "2026-10-25 11:12:10"
+  }
+]

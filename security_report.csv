@@ -1,0 +1,8 @@
+IP Address,Activity,Event Count,Severity,Threat,Recommendation
+192.168.1.10,Repeated Failed Logins,11,HIGH,Possible Brute-Force Attack,Block IP with firewall | Enable account lockout policy | Enforce MFA (Multi-Factor Authentication)
+172.16.0.50,Repeated Failed Logins,10,HIGH,Possible Brute-Force Attack,Block IP with firewall | Enable account lockout policy | Enforce MFA (Multi-Factor Authentication)
+192.168.1.20,Port Scanning Activity,11,HIGH,Possible Network Reconnaissance / Port Scan,Block IP immediately | Enable IDS/IPS rules | Review firewall ingress rules
+10.0.0.99,Port Scanning Activity,12,HIGH,Possible Network Reconnaissance / Port Scan,Block IP immediately | Enable IDS/IPS rules | Review firewall ingress rules
+192.168.1.30,Suspicious Unauthorized Access,7,HIGH,Possible Unauthorized Access Attempt,Investigate immediately | Check access-control lists | Review authentication logs | Isolate affected systems
+10.0.0.22,Repeated Failed Logins,6,MEDIUM,Possible Brute-Force Attack,Block IP with firewall | Enable account lockout policy | Enforce MFA (Multi-Factor Authentication)
+192.168.1.45,Port Scanning Activity,6,MEDIUM,Possible Network Reconnaissance / Port Scan,Block IP immediately | Enable IDS/IPS rules | Review firewall ingress rules

@@ -1,0 +1,23 @@
+# Git ignore – don't track temp / cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.env
+.venv/
+venv/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Keep generated outputs (they are part of the demo)
+# security_report.html  <-- tracked
+# alerts.json           <-- tracked
+# security_report.csv   <-- tracked

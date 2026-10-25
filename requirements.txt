@@ -1,0 +1,12 @@
+# Security Log Analyzer - Requirements
+# This project uses only Python Standard Library modules.
+# No external packages are required.
+# Compatible with Python 3.6 and above.
+
+# Standard library modules used:
+# - re         : Regular expressions for log parsing
+# - csv        : Writing CSV security reports
+# - datetime   : Timestamp parsing and formatting
+# - collections : Counter and defaultdict for data aggregation
+# - os         : File existence checks
+# - sys        : System exit and error handling
